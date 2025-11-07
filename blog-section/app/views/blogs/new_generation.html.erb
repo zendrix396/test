@@ -1,0 +1,375 @@
+<div class="page-header">
+  <h1>Generate Blog Articles</h1>
+  <%= link_to "← Back to Blogs", blogs_path, class: "link-secondary" %>
+</div>
+
+<div class="generation-wrapper">
+  <%= form_tag stream_generate_blogs_path, method: :post, id: "generation-form", data: { turbo: "false" } do %>
+    <div class="form-section-minimal">
+      <div class="blog-entries-scroll">
+        <div id="blog-entries-minimal">
+          <!-- Initial entry -->
+          <div class="blog-entry-minimal" data-entry-index="0">
+            <div class="entry-header-minimal">
+              <button type="button" class="btn-remove-minimal" style="display: none;" title="Remove this entry">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="4" y1="4" x2="12" y2="12"></line>
+                  <line x1="12" y1="4" x2="4" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+            
+            <input 
+              type="text" 
+              name="blog_entries[0][title]" 
+              class="title-input" 
+              placeholder="Enter article title..." 
+              required
+            >
+            
+            <button type="button" class="context-accordion" data-expanded="false">
+              <span class="accordion-text">Add context</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 6 8 10 12 6"></polyline>
+              </svg>
+            </button>
+            
+            <div class="context-content" style="display: none;">
+              <textarea 
+                name="blog_entries[0][context]" 
+                class="context-input" 
+                rows="3" 
+                placeholder="Optional: Add tone, style, or specific points to mention..."
+              ></textarea>
+            </div>
+            
+            <button type="button" class="add-more-btn">+ Add more</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions-minimal">
+        <%= submit_tag "Generate Articles", class: "btn btn-primary", id: "generate-submit" %>
+      </div>
+    </div>
+  <% end %>
+
+  <section class="stream-panel" aria-live="polite">
+    <div id="stream-status" class="stream-status">Enter titles above to begin generation.</div>
+    <div id="stream-articles" class="stream-articles"></div>
+    <div id="stream-summary" class="stream-summary"></div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const ready = () => {
+    const form = document.getElementById("generation-form");
+    if (!form || form.dataset.streamBound === "true") return;
+    form.dataset.streamBound = "true";
+
+    const blogEntriesContainer = document.getElementById("blog-entries-minimal");
+    const submitButton = document.getElementById("generate-submit");
+    const statusEl = document.getElementById("stream-status");
+    const articlesEl = document.getElementById("stream-articles");
+    const summaryEl = document.getElementById("stream-summary");
+
+    let entryCounter = 1;
+    let activeController = null;
+    let currentArticleCard = null;
+
+    const csrfToken = document.querySelector("meta[name='csrf-token']")?.content || "";
+
+    // Function to create a new blog entry
+    const createBlogEntry = (index) => {
+      const entryDiv = document.createElement("div");
+      entryDiv.className = "blog-entry-minimal";
+      entryDiv.dataset.entryIndex = index;
+      entryDiv.innerHTML = `
+        <div class="entry-header-minimal">
+          <button type="button" class="btn-remove-minimal" title="Remove this entry">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="4" x2="12" y2="12"></line>
+              <line x1="12" y1="4" x2="4" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <input 
+          type="text" 
+          name="blog_entries[${index}][title]" 
+          class="title-input" 
+          placeholder="Enter article title..." 
+          required
+        >
+        
+        <button type="button" class="context-accordion" data-expanded="false">
+          <span class="accordion-text">Add context</span>
+          <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 6 8 10 12 6"></polyline>
+          </svg>
+        </button>
+        
+        <div class="context-content" style="display: none;">
+          <textarea 
+            name="blog_entries[${index}][context]" 
+            class="context-input" 
+            rows="3" 
+            placeholder="Optional: Add tone, style, or specific points to mention..."
+          ></textarea>
+        </div>
+        
+        <button type="button" class="add-more-btn">+ Add more</button>
+      `;
+      return entryDiv;
+    };
+
+    // Update remove button visibility
+    const updateRemoveButtons = () => {
+      const entries = blogEntriesContainer.querySelectorAll(".blog-entry-minimal");
+      const shouldShow = entries.length > 1;
+      
+      entries.forEach((entry) => {
+        const removeBtn = entry.querySelector(".btn-remove-minimal");
+        if (removeBtn) {
+          removeBtn.style.display = shouldShow ? "flex" : "none";
+        }
+      });
+    };
+
+    // Event delegation for dynamic buttons
+    blogEntriesContainer.addEventListener("click", (e) => {
+      const target = e.target.closest("button");
+      if (!target) return;
+      
+      const entry = target.closest(".blog-entry-minimal");
+      if (!entry) return;
+      
+      // Toggle context accordion
+      if (target.classList.contains("context-accordion")) {
+        const contextContent = entry.querySelector(".context-content");
+        const isExpanded = target.dataset.expanded === "true";
+        
+        if (isExpanded) {
+          contextContent.style.display = "none";
+          target.dataset.expanded = "false";
+          target.querySelector(".accordion-text").textContent = "Add context";
+        } else {
+          contextContent.style.display = "block";
+          target.dataset.expanded = "true";
+          target.querySelector(".accordion-text").textContent = "Hide context";
+          // Focus the textarea
+          setTimeout(() => {
+            const textarea = contextContent.querySelector("textarea");
+            textarea?.focus();
+          }, 100);
+        }
+      }
+      
+      // Add more button
+      if (target.classList.contains("add-more-btn")) {
+        const newEntry = createBlogEntry(entryCounter);
+        blogEntriesContainer.appendChild(newEntry);
+        entryCounter++;
+        updateRemoveButtons();
+        
+        // Scroll to the new entry
+        setTimeout(() => {
+          newEntry.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          newEntry.querySelector(".title-input")?.focus();
+        }, 100);
+      }
+      
+      // Remove button
+      if (target.classList.contains("btn-remove-minimal")) {
+        const entries = blogEntriesContainer.querySelectorAll(".blog-entry-minimal");
+        if (entries.length > 1) {
+          entry.remove();
+          updateRemoveButtons();
+        }
+      }
+    });
+
+    // Initialize remove button visibility
+    updateRemoveButtons();
+
+    const handleEvent = (data) => {
+      if (!data || typeof data !== "object") return;
+
+      switch (data.type) {
+        case "status":
+          statusEl.textContent = data.message || "";
+          break;
+        case "article_start":
+          // Create a new card for the article
+          const card = document.createElement("div");
+          card.className = "article-card generating";
+          card.innerHTML = `
+            <div class="article-header">
+              <h3 class="article-title">${escapeHtml(data.title || `Article ${data.index + 1}`)}</h3>
+              <span class="article-status">Generating...</span>
+            </div>
+            <div class="article-content"></div>
+          `;
+          articlesEl.appendChild(card);
+          currentArticleCard = card;
+          break;
+        case "delta":
+          if (data.text && currentArticleCard) {
+            const contentEl = currentArticleCard.querySelector(".article-content");
+            if (contentEl) {
+              contentEl.textContent += data.text;
+              contentEl.scrollTop = contentEl.scrollHeight;
+            }
+          }
+          break;
+        case "article_saved":
+          if (currentArticleCard) {
+            currentArticleCard.classList.remove("generating");
+            currentArticleCard.classList.add("saved");
+            const statusSpan = currentArticleCard.querySelector(".article-status");
+            if (statusSpan) {
+              statusSpan.textContent = "✓ Saved";
+            }
+            currentArticleCard = null;
+          }
+          statusEl.textContent = `Saved article ${data.index}: ${data.title}`;
+          break;
+        case "complete":
+          summaryEl.textContent = `✓ Successfully generated and saved ${data.saved || 0} of ${data.requested || 0} articles.`;
+          summaryEl.className = "stream-summary success";
+          statusEl.textContent = "Generation complete! Redirecting...";
+          setTimeout(() => {
+            window.location.href = "<%= blogs_path %>";
+          }, 2000);
+          break;
+        case "error":
+          statusEl.textContent = `Error: ${data.message || "An error occurred."}`;
+          statusEl.className = "stream-status error";
+          summaryEl.textContent = "";
+          break;
+        case "done":
+          if (!statusEl.textContent || statusEl.textContent === "Contacting Gemini…") {
+            statusEl.textContent = "Finished.";
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    const escapeHtml = (text) => {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Collect all blog entries
+      const entries = [];
+      const entryDivs = blogEntriesContainer.querySelectorAll(".blog-entry-minimal");
+      
+      entryDivs.forEach((entryDiv) => {
+        const titleInput = entryDiv.querySelector(".title-input");
+        const contextTextarea = entryDiv.querySelector(".context-input");
+        
+        const title = titleInput?.value.trim();
+        if (title) {
+          entries.push({
+            title: title,
+            context: contextTextarea?.value.trim() || ""
+          });
+        }
+      });
+
+      if (entries.length === 0) {
+        statusEl.textContent = "Please enter at least one article title.";
+        statusEl.className = "stream-status error";
+        return;
+      }
+
+      if (activeController) {
+        activeController.abort();
+      }
+      activeController = new AbortController();
+
+      statusEl.textContent = "Initializing generation...";
+      statusEl.className = "stream-status";
+      articlesEl.innerHTML = "";
+      summaryEl.textContent = "";
+      summaryEl.className = "stream-summary";
+      submitButton.disabled = true;
+      currentArticleCard = null;
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+            "Accept": "text/event-stream"
+          },
+          body: JSON.stringify({ blog_entries: entries }),
+          signal: activeController.signal,
+          credentials: "same-origin"
+        });
+
+        if (!response.ok || !response.body) {
+          statusEl.textContent = `Request failed${response.status ? ` (${response.status})` : ""}.`;
+          statusEl.className = "stream-status error";
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        const pump = async () => {
+          const { value, done } = await reader.read();
+          if (done) {
+            return;
+          }
+
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split("\n\n");
+          buffer = parts.pop() || "";
+
+          parts.forEach((part) => {
+            if (!part.startsWith("data:")) return;
+            const payload = part.replace(/^data:\s?/, "").trim();
+            if (!payload) return;
+
+            try {
+              const parsed = JSON.parse(payload);
+              handleEvent(parsed);
+            } catch (error) {
+              console.error("Failed to parse stream payload", error, payload);
+            }
+          });
+
+          await pump();
+        };
+
+        await pump();
+      } catch (error) {
+        if (error.name === "AbortError") {
+          statusEl.textContent = "Request cancelled.";
+        } else {
+          statusEl.textContent = `Error: ${error.message}`;
+          statusEl.className = "stream-status error";
+        }
+      } finally {
+        submitButton.disabled = false;
+        if (activeController) {
+          activeController = null;
+        }
+      }
+    });
+  };
+
+  document.addEventListener("turbo:load", ready);
+  document.addEventListener("DOMContentLoaded", ready);
+})();
+</script>

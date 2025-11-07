@@ -1,0 +1,35 @@
+<div class="blog-show-header">
+  <%= link_to blogs_path, class: "back-button" do %>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="12 4 6 10 12 16"></polyline>
+    </svg>
+    Back to Blogs
+  <% end %>
+</div>
+
+<article class="blog-show">
+  <header class="blog-show-title-section">
+    <h1 class="blog-show-title"><%= @blog.title %></h1>
+    <div class="blog-show-meta">
+      <time datetime="<%= @blog.created_at.iso8601 %>">
+        Published on <%= @blog.created_at.strftime("%B %d, %Y") %>
+      </time>
+      <% if @blog.updated_at != @blog.created_at %>
+        <span class="blog-show-meta-separator">•</span>
+        <span class="blog-show-updated">
+          Updated <%= @blog.updated_at.strftime("%B %d, %Y") %>
+        </span>
+      <% end %>
+    </div>
+  </header>
+  
+  <div class="blog-show-content markdown-content">
+    <%= markdown(@blog.content) %>
+  </div>
+  
+  <footer class="blog-show-actions">
+    <%= link_to "Edit Article", edit_blog_path(@blog), class: "btn btn-secondary" %>
+    <%= button_to "Delete Article", @blog, method: :delete, data: { turbo_confirm: "Are you sure you want to delete this blog?" }, class: "btn btn-danger" %>
+  </footer>
+</article>
+

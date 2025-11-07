@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.env
+*.log
+cookies.json
+linkedin_profiles.csv
+*.png
+*.html
+.DS_Store
+uv.lock

@@ -1,0 +1,40 @@
+<% if notice %>
+  <div class="notice"><%= notice %></div>
+<% end %>
+
+<div class="page-header">
+  <h1>Blog Articles</h1>
+  <div class="header-actions">
+    <%= link_to "Generate New Articles", generate_blogs_path, class: "btn btn-primary" %>
+    <%= link_to "New Blog", new_blog_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<% if @blogs.empty? %>
+  <div class="empty-state">
+    <p>No blog articles yet.</p>
+    <p><%= link_to "Generate some articles", generate_blogs_path, class: "link-primary" %> to get started.</p>
+  </div>
+<% else %>
+  <div class="blogs-grid">
+    <% @blogs.order(created_at: :desc).each do |blog| %>
+      <%= link_to blog, class: "blog-card-link" do %>
+        <article class="blog-card-clickable">
+          <h2 class="blog-card-title"><%= blog.title %></h2>
+          <div class="blog-card-meta">
+            <time datetime="<%= blog.created_at.iso8601 %>">
+              <%= blog.created_at.strftime("%B %d, %Y") %>
+            </time>
+            <span class="blog-card-arrow">→</span>
+          </div>
+          <% if blog.content.present? %>
+            <p class="blog-card-excerpt">
+              <%= truncate(strip_tags(markdown(blog.content)), length: 200, separator: ' ') %>
+            </p>
+          <% end %>
+        </article>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
