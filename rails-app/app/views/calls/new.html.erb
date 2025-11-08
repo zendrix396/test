@@ -1,0 +1,217 @@
+<div class="page-header">
+  <h1>Make Test Calls</h1>
+  <%= link_to "← Back to Call Logs", calls_path, class: "link-secondary" %>
+</div>
+
+<div class="call-wrapper">
+  <%= form_tag calls_path, method: :post, id: "call-form", data: { turbo: "false" } do %>
+    <div class="call-form-section">
+      <div class="form-group">
+        <label for="phone_numbers">Phone Numbers</label>
+        <p class="field-description">Enter one or more phone numbers (one per line or comma-separated)</p>
+        <%= text_area_tag :phone_numbers, "", 
+            class: "form-control", 
+            rows: 8,
+            placeholder: "+14108675310\n+15005550001\n+15005550002",
+            required: true %>
+      </div>
+
+      <div class="form-group">
+        <label for="message_url">Message URL (Optional)</label>
+        <p class="field-description">TwiML URL for the call message. Leave blank for default test message.</p>
+        <%= text_field_tag :message_url, 
+            "http://twimlets.com/message?Message%5B0%5D=Hello%2C%20this%20is%20a%20test%20call%20from%20our%20automated%20system.%20Thank%20you%20for%20your%20time.%20Goodbye.&Voice=alice&",
+            class: "form-control" %>
+      </div>
+
+      <div class="form-actions">
+        <%= submit_tag "Initiate Calls", class: "btn btn-primary" %>
+        <%= link_to "Cancel", calls_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+
+    <div class="call-info-panel">
+      <h3>Test Numbers</h3>
+      <p class="info-text">Use these Twilio magic test numbers for testing without using credits:</p>
+      
+      <div class="test-numbers-list">
+        <div class="test-number-card">
+          <code class="test-number">+14108675310</code>
+          <p class="test-number-desc">Valid number for testing</p>
+        </div>
+        
+        <div class="test-number-card">
+          <code class="test-number">+15005550001</code>
+          <p class="test-number-desc">Invalid number</p>
+        </div>
+        
+        <div class="test-number-card">
+          <code class="test-number">+15005550002</code>
+          <p class="test-number-desc">Not routable</p>
+        </div>
+        
+        <div class="test-number-card">
+          <code class="test-number">+15005550003</code>
+          <p class="test-number-desc">International permissions needed</p>
+        </div>
+        
+        <div class="test-number-card">
+          <code class="test-number">+15005550004</code>
+          <p class="test-number-desc">Blocked number</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4>Links</h4>
+        <ul class="links-list">
+          <li><%= link_to "View Call Logs", calls_path %></li>
+          <li><%= link_to "Back to Blogs", blogs_path %></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.call-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  margin-top: var(--spacing-lg);
+}
+
+@media (min-width: 1024px) {
+  .call-wrapper {
+    grid-template-columns: 1fr 400px;
+  }
+}
+
+.call-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.field-description {
+  font-size: 0.9rem;
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-sm);
+  margin-top: 0;
+}
+
+.call-info-panel {
+  background-color: var(--color-gray-100);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  height: fit-content;
+}
+
+.call-info-panel h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-fg);
+}
+
+.call-info-panel h4 {
+  font-size: 1rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-text {
+  font-size: 0.95rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.test-numbers-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.test-number-card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  transition: all 0.15s ease;
+}
+
+.test-number-card:hover {
+  border-color: var(--color-fg);
+  box-shadow: var(--shadow-sm);
+}
+
+.test-number {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.test-number-desc {
+  font-size: 0.85rem;
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.info-box {
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.info-box:last-child {
+  margin-bottom: 0;
+}
+
+.config-list,
+.links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.config-list li,
+.links-list li {
+  padding: var(--spacing-xs) 0;
+  font-size: 0.9rem;
+}
+
+.config-list code {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 0.2em 0.4em;
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-sm);
+  color: var(--color-fg);
+}
+
+.links-list a {
+  color: var(--color-fg);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.links-list a:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .call-info-panel {
+    padding: var(--spacing-lg);
+  }
+}
+</style>
+

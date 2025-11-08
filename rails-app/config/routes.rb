@@ -13,5 +13,9 @@ Rails.application.routes.draw do
   get 'generate_blogs', to: 'blogs#new_generation'
   post 'generate_blogs', to: 'blogs#create_generation'
   post 'generate_blogs/stream', to: 'blogs#stream_generation', as: :stream_generate_blogs
+  
+  resources :calls, only: [:index, :new, :create, :destroy]
+  delete 'calls_clear_all', to: 'calls#destroy_all', as: :clear_all_calls
+  
   root 'blogs#index'
 end

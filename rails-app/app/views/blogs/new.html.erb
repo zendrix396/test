@@ -1,0 +1,10 @@
+<div class="page-header">
+  <h1>New Blog</h1>
+  <div class="header-nav-links">
+    <%= link_to "← Back to Blogs", blogs_path, class: "link-secondary" %>
+    <%= link_to "Call Logs", calls_path, class: "link-secondary" %>
+  </div>
+</div>
+
+<%= render "form", blog: @blog %>
+

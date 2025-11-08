@@ -1,0 +1,209 @@
+<% if notice %>
+  <div class="notice"><%= notice %></div>
+<% end %>
+
+<div class="page-header">
+  <h1>Call Logs</h1>
+  <div class="header-actions">
+    <%= link_to "Make New Calls", new_call_path, class: "btn btn-primary" %>
+    <%= link_to "Blogs", blogs_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<% if @calls.empty? %>
+  <div class="empty-state">
+    <p>No call logs yet.</p>
+    <p><%= link_to "Make your first call", new_call_path, class: "link-primary" %> to get started.</p>
+  </div>
+<% else %>
+  <div style="margin-bottom: var(--spacing-lg); display: flex; justify-content: space-between; align-items: center;">
+    <p style="color: var(--color-gray-600); margin: 0;">Total calls: <%= @calls.count %></p>
+    <%= button_to "Clear All Logs", clear_all_calls_path, method: :delete, 
+        data: { turbo_confirm: "Are you sure you want to delete all call logs?" }, 
+        class: "btn btn-danger" %>
+  </div>
+
+  <div class="calls-table-wrapper">
+    <table class="calls-table">
+      <thead>
+        <tr>
+          <th>Phone Number</th>
+          <th>Status</th>
+          <th>SID</th>
+          <th>Error Message</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @calls.each do |call| %>
+          <tr class="call-row <%= 'call-failed' if call.status == 'failed' %>">
+            <td class="call-number"><%= call.phone_number %></td>
+            <td>
+              <span class="status-badge status-<%= call.status %>">
+                <%= call.status %>
+              </span>
+            </td>
+            <td class="call-sid">
+              <% if call.sid.present? %>
+                <code><%= call.sid %></code>
+              <% else %>
+                <span class="text-muted">—</span>
+              <% end %>
+            </td>
+            <td class="call-error">
+              <% if call.error_message.present? %>
+                <%= truncate(call.error_message, length: 100) %>
+              <% else %>
+                <span class="text-muted">—</span>
+              <% end %>
+            </td>
+            <td class="call-time">
+              <time datetime="<%= call.created_at.iso8601 %>">
+                <%= call.created_at.strftime("%b %d, %Y %H:%M") %>
+              </time>
+            </td>
+            <td>
+              <%= button_to "Delete", call_path(call), method: :delete, 
+                  data: { turbo_confirm: "Are you sure?" }, 
+                  class: "btn-table-action" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<style>
+.calls-table-wrapper {
+  overflow-x: auto;
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+.calls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: var(--color-bg);
+}
+
+.calls-table thead {
+  background-color: var(--color-gray-900);
+  color: var(--color-bg);
+}
+
+.calls-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.calls-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+.call-row:hover {
+  background-color: var(--color-gray-100);
+}
+
+.call-row.call-failed {
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.call-number {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.call-sid code {
+  font-size: 0.85rem;
+  padding: 0.2em 0.4em;
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-sm);
+  color: var(--color-gray-700);
+}
+
+.call-error {
+  max-width: 300px;
+  font-size: 0.9rem;
+  color: var(--color-gray-700);
+}
+
+.call-time {
+  font-size: 0.9rem;
+  color: var(--color-gray-600);
+}
+
+.text-muted {
+  color: var(--color-gray-400);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-queued,
+.status-ringing,
+.status-in-progress {
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-900);
+}
+
+.status-completed {
+  background-color: var(--color-gray-900);
+  color: var(--color-bg);
+}
+
+.status-failed,
+.status-busy,
+.status-no-answer {
+  background-color: var(--color-gray-700);
+  color: var(--color-bg);
+}
+
+.btn-table-action {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--color-gray-400);
+  background-color: transparent;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  transition: all 0.15s ease;
+}
+
+.btn-table-action:hover {
+  background-color: var(--color-gray-900);
+  border-color: var(--color-gray-900);
+  color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .calls-table {
+    font-size: 0.85rem;
+  }
+  
+  .calls-table th,
+  .calls-table td {
+    padding: var(--spacing-sm);
+  }
+  
+  .call-error {
+    max-width: 150px;
+  }
+}
+</style>
+

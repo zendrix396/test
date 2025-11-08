@@ -1,10 +1,13 @@
 <div class="blog-show-header">
-  <%= link_to blogs_path, class: "back-button" do %>
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="12 4 6 10 12 16"></polyline>
-    </svg>
-    Back to Blogs
-  <% end %>
+  <div style="display: flex; gap: var(--spacing-md); align-items: center; flex-wrap: wrap;">
+    <%= link_to blogs_path, class: "back-button" do %>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="12 4 6 10 12 16"></polyline>
+      </svg>
+      Back to Blogs
+    <% end %>
+    <%= link_to "Call Logs", calls_path, class: "link-secondary" %>
+  </div>
 </div>
 
 <article class="blog-show">
