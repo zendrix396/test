@@ -6,9 +6,49 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+COUNTRY_TO_GEO_URN = {
+    "france": "105015875",
+    "belgium": "100565514",
+    "spain": "105646813",
+    "england": "102299470",
+    "germany": "101282230",
+    "italy": "103350119",
+    "united states": "103644278",
+    "canada": "101174742",
+    "australia": "101452733",
+    "india": "102713980",
+    "china": "102890883",
+    "japan": "101355337",
+    "brazil": "106057199",
+    "mexico": "103323778",
+    "netherlands": "102890719",
+    "singapore": "102454443",
+    "switzerland": "106693272",
+    "sweden": "105117694",
+    "south korea": "105149562",
+    "russia": "101728296",
+    "united arab emirates": "104305776",
+    # Helpful aliases
+    "uae": "104305776",
+    "uk": "102299470",
+    "united kingdom": "102299470",
+    "usa": "103644278",
+    "us": "103644278",
+}
+
+def _get_geo_urn(location: str):
+    if not location:
+        return None
+    key = location.strip().lower()
+    return COUNTRY_TO_GEO_URN.get(key)
+
 def build_search_url(keywords, location):
     encoded_keywords = quote(keywords)
-    return f"https://www.linkedin.com/search/results/people/?keywords={encoded_keywords}&geoUrn=%5B%22103644278%22%5D&origin=GLOBAL_SEARCH_HEADER"
+    base = f"https://www.linkedin.com/search/results/people/?keywords={encoded_keywords}&origin=GLOBAL_SEARCH_HEADER"
+    geo_urn = _get_geo_urn(location)
+    if geo_urn:
+        return f"{base}&geoUrn=%5B%22{geo_urn}%22%5D"
+    return base
 
 def extract_experience_details(driver, experience_url):
     driver.get(experience_url)

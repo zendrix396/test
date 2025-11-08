@@ -1,7 +1,7 @@
 # Search settings
-SEARCH_KEYWORDS = "Data Scientist"
+SEARCH_KEYWORDS = "Data Science"
 LOCATION = "India"
-PROFILES_TO_SCRAPE = 15
+PROFILES_TO_SCRAPE = 5
 
 # New setting for scrape mode: "SUMMARY" or "DETAILED"
 # "SUMMARY": Scrapes only the main profile page (more reliable).
