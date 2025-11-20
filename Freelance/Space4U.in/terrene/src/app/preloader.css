@@ -1,0 +1,155 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  z-index: 100000;
+  pointer-events: all;
+}
+
+.loader .overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  color: var(--base-100);
+}
+
+.loader .block {
+  width: 100%;
+  height: 100%;
+  background: var(--base-500);
+}
+
+.loader .intro-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.loader #word-1 {
+  position: relative;
+  left: 2.5rem;
+  /* padding-right: 0.25rem; */
+  color: var(--base-100);
+}
+
+.loader #word-2 {
+  position: relative;
+  left: 4.2rem;
+  /* padding-right: 0.25rem; */
+  color: var(--base-100);
+}
+
+.loader .word h1 {
+  font-size: 2rem;
+  color: var(--base-300);
+  letter-spacing: -0.05rem;
+}
+
+.loader .divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: center top;
+  width: 1px;
+  height: 100%;
+  background-color: rgba(242, 237, 230, 0.125);
+}
+
+.loader .spinner-container {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loader .spinner {
+  width: 50px;
+  height: 50px;
+  border: 1.4px solid var(--base-350);
+  border-top-color: rgba(242, 237, 230, 0.05);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader .counter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.loader .count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+.loader .digit {
+  flex: 1;
+  padding-top: 1rem;
+}
+
+.loader .count .digit h1 {
+  font-size: 15rem;
+  font-weight: 400;
+  color: var(--base-400);
+}
+
+.loader .line,
+.loader .word,
+.loader .count .digit {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.loader .line h1,
+.loader .line p,
+.loader .count .digit h1 {
+  position: relative;
+  transform: translateY(120%);
+  will-change: transform;
+}
+
+.loader #word-1 h1 {
+  transform: translateY(-120%);
+}
+
+.loader #word-2 h1 {
+  transform: translateY(120%);
+}
+
+.loader .block {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.loader .divider {
+  transform: scaleY(0%);
+  will-change: transform;
+}
+
+@media (max-width: 1000px) {
+  .loader .counter .count .digit h1 {
+    font-size: 7rem;
+  }
+
+  .loader .counter .count .digit {
+    padding-top: 0.25rem;
+  }
+}

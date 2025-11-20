@@ -1,0 +1,94 @@
+.gallery-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+  background-color: var(--base-500);
+}
+
+.canvas {
+  position: absolute;
+  will-change: transform;
+}
+
+.item {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.item img {
+  opacity: 0.7 !important;
+}
+
+.expanded-item {
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--base-500);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  filter: contrast(1.1) !important;
+  opacity: 0.7 !important;
+}
+
+.gallery-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  filter: contrast(1.1) !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--base-500);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  z-index: 2;
+}
+
+.overlay.active {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.project-title {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.project-title p {
+  position: relative;
+  height: 4rem;
+  color: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.project-title p .word {
+  position: relative;
+  display: inline-block;
+  font-size: 3rem;
+  letter-spacing: -0.02rem;
+  margin-right: 0.1em;
+  transform: translateY(0%);
+  will-change: transform;
+}

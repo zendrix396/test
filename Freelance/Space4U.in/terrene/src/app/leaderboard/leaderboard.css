@@ -1,0 +1,242 @@
+.leaderboard-page {
+  min-height: 100vh;
+  background-color: var(--base-500);
+  background-image: url('/home/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--base-050);
+}
+
+.leaderboard-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(20, 19, 19, 0.92);
+  z-index: 0;
+}
+
+.leaderboard-page .container {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem 6rem;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.leaderboard-hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.leaderboard-hero h1 {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  letter-spacing: -0.15rem;
+  margin-bottom: 1rem;
+  color: var(--base-100);
+}
+
+.leaderboard-hero p {
+  font-size: 1.1rem;
+  color: var(--base-250);
+  margin-bottom: 2rem;
+}
+
+.user-rank-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  background: rgba(20, 19, 19, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.4rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.user-rank-badge .rank-label {
+  font-size: 0.9rem;
+  color: var(--base-250);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.user-rank-badge .rank-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--base-100);
+}
+
+.user-rank-badge .rank-points {
+  font-size: 1.1rem;
+  color: var(--base-200);
+}
+
+.leaderboard-loading,
+.leaderboard-empty {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--base-250);
+}
+
+.leaderboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.leaderboard-card {
+  background: rgba(20, 19, 19, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.4rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.4s ease, 
+              box-shadow 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: leaderboardCardFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.leaderboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(242, 237, 230, 0.3), 
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.leaderboard-card:hover::before {
+  opacity: 1;
+}
+
+.leaderboard-card:nth-child(1) { animation-delay: 0.05s; }
+.leaderboard-card:nth-child(2) { animation-delay: 0.1s; }
+.leaderboard-card:nth-child(3) { animation-delay: 0.15s; }
+.leaderboard-card:nth-child(4) { animation-delay: 0.2s; }
+.leaderboard-card:nth-child(5) { animation-delay: 0.25s; }
+.leaderboard-card:nth-child(n+6) { animation-delay: 0.3s; }
+
+@keyframes leaderboardCardFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leaderboard-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+}
+
+.leaderboard-card.is-current-user {
+  border-color: rgba(242, 237, 230, 0.3);
+  background: rgba(242, 237, 230, 0.08);
+}
+
+.leaderboard-card.is-current-user::after {
+  content: 'You';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(242, 84, 91, 0.2);
+  border: 1px solid rgba(242, 84, 91, 0.4);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(242, 84, 91, 0.95);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.leaderboard-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.leaderboard-card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(242, 237, 230, 0.4), transparent);
+  border-radius: 2px;
+}
+
+.leaderboard-rank {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--base-100);
+  min-width: 3rem;
+  text-align: center;
+}
+
+.leaderboard-username {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--base-200);
+  flex: 1;
+}
+
+.leaderboard-username.highlight {
+  color: var(--base-100);
+}
+
+.leaderboard-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.leaderboard-points {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.points-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--base-100);
+}
+
+.points-label {
+  font-size: 0.9rem;
+  color: var(--base-250);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .leaderboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

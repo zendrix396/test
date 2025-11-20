@@ -1,0 +1,95 @@
+.btn {
+  position: relative;
+  display: inline-block;
+  width: 12rem;
+  height: auto;
+  padding: 0.15rem;
+  outline: none;
+  border: none;
+  font-size: 0.9rem;
+  background: rgba(242, 237, 230, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 4rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  transform: scale(0);
+}
+
+.btn .circle {
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: var(--base-450);
+  border-radius: 4rem;
+  font-size: 1.5rem;
+  transform: scale(0);
+  overflow: hidden;
+  transition: width 0.5s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+.btn .icon {
+  position: absolute;
+  top: 0.775rem;
+  left: 0.95rem;
+  color: var(--base-100);
+  font-size: 1.5rem;
+  transform: translateX(0);
+  transition: all 0.5s cubic-bezier(0.65, 0, 0.076, 1);
+  will-change: transform;
+}
+
+.btn .button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 0 0 1.25rem;
+  text-align: center;
+  color: var(--base-500);
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.5s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn .line {
+  position: relative;
+  transform: translateY(100%);
+  will-change: transform;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+.btn:hover .circle {
+  width: 100%;
+}
+
+.btn:hover .icon {
+  transform: translate(0.75rem);
+}
+
+.btn:hover .button-text {
+  color: var(--base-100);
+}
+
+/* Specific fix for checkout button - adds padding after arrow icon */
+.btn.checkout-button {
+  width: auto;
+  min-width: 14rem;
+  padding-right: 1.5rem;
+}
+
+.btn.checkout-button .button-text {
+  left: 3.75rem;
+  transform: translateY(-50%);
+  text-align: left;
+  margin: 0;
+}

@@ -1,0 +1,411 @@
+.order-detail-page {
+  padding-bottom: 6rem;
+}
+
+.order-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.order-detail-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+/* Tracking Section */
+.tracking-section {
+  background: rgba(20, 19, 19, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.4rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+}
+
+.tracking-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: var(--base-100);
+}
+
+.tracking-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tracking-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tracking-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tracking-value {
+  font-size: 1.1rem;
+  color: var(--base-100);
+  font-weight: 600;
+}
+
+.tracking-value.expected-delivery {
+  color: rgba(122, 231, 128, 0.95);
+}
+
+.current-status {
+  margin-bottom: 2rem;
+}
+
+.current-status h3 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--base-100);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.9rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.status-badge.status-success {
+  background-color: rgba(122, 231, 128, 0.2);
+  color: rgba(122, 231, 128, 0.95);
+  border: 1px solid rgba(122, 231, 128, 0.4);
+}
+
+.status-badge.status-pending {
+  background-color: rgba(242, 211, 91, 0.2);
+  color: rgba(242, 211, 91, 0.95);
+  border: 1px solid rgba(242, 211, 91, 0.4);
+}
+
+.status-badge.status-in-transit {
+  background-color: rgba(79, 70, 229, 0.2);
+  color: rgba(79, 70, 229, 0.95);
+  border: 1px solid rgba(79, 70, 229, 0.4);
+}
+
+.status-badge.status-error {
+  background-color: rgba(242, 84, 91, 0.2);
+  color: rgba(242, 84, 91, 0.95);
+  border: 1px solid rgba(242, 84, 91, 0.4);
+}
+
+.status-badge.status-info {
+  background-color: rgba(135, 206, 235, 0.2);
+  color: rgba(135, 206, 235, 0.95);
+  border: 1px solid rgba(135, 206, 235, 0.4);
+}
+
+/* Tracking Timeline */
+.tracking-timeline {
+  margin-top: 2rem;
+}
+
+.tracking-timeline h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: var(--base-100);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -1.5rem;
+  top: 0.25rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(242, 237, 230, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.timeline-item:first-child .timeline-marker {
+  background: rgba(122, 231, 128, 0.6);
+  border-color: rgba(122, 231, 128, 0.8);
+}
+
+.timeline-content {
+  background: rgba(20, 19, 19, 0.4);
+  padding: 1.25rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-status {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--base-100);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-location {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-date {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-instructions {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tracking-loading,
+.tracking-no-history {
+  padding: 2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(20, 19, 19, 0.4);
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Order Items Section */
+.order-items-section,
+.order-summary-section,
+.shipping-address-section {
+  background: rgba(20, 19, 19, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.4rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+}
+
+.order-items-section h2,
+.order-summary-section h2,
+.shipping-address-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: var(--base-100);
+}
+
+.order-items-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.order-item-card {
+  padding: 1.5rem;
+  background: rgba(20, 19, 19, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+}
+
+.order-item-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--base-100);
+  font-size: 1.1rem;
+}
+
+.item-sku,
+.item-quantity {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0.25rem 0;
+}
+
+.item-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--base-100);
+  margin-top: 0.5rem;
+}
+
+/* Summary Grid */
+.summary-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(20, 19, 19, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+}
+
+.summary-item.total {
+  border: 2px solid rgba(242, 237, 230, 0.2);
+  background: rgba(242, 237, 230, 0.05);
+  margin-top: 0.5rem;
+}
+
+.summary-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+.summary-value {
+  color: var(--base-100);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.summary-value.discount {
+  color: rgba(122, 231, 128, 0.9);
+}
+
+/* Address Card */
+.address-card {
+  padding: 1.5rem;
+  background: rgba(20, 19, 19, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+}
+
+.address-card p {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.address-card strong {
+  color: var(--base-100);
+  font-size: 1.1rem;
+}
+
+/* Order Action Buttons */
+.order-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.order-action-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(242, 237, 230, 0.08);
+  color: var(--base-100);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  font-family: inherit;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.order-action-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(242, 237, 230, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.order-action-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.order-action-button.primary {
+  background: rgba(242, 237, 230, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.order-action-button.danger {
+  background: rgba(242, 84, 91, 0.15);
+  border-color: rgba(242, 84, 91, 0.3);
+  color: rgba(242, 84, 91, 0.95);
+}
+
+.order-action-button.danger:hover:not(:disabled) {
+  background: rgba(242, 84, 91, 0.2);
+  border-color: rgba(242, 84, 91, 0.4);
+}
+
+.order-action-button.success {
+  background: rgba(122, 231, 128, 0.15);
+  border-color: rgba(122, 231, 128, 0.3);
+  color: rgba(122, 231, 128, 0.95);
+}
+
+.order-action-button.success:hover:not(:disabled) {
+  background: rgba(122, 231, 128, 0.2);
+  border-color: rgba(122, 231, 128, 0.4);
+}
+
+@media (max-width: 768px) {
+  .order-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tracking-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    padding-left: 1.5rem;
+  }
+
+  .timeline-item {
+    padding-left: 1.5rem;
+  }
+
+  .timeline-marker {
+    left: -1.25rem;
+  }
+
+  .order-actions {
+    flex-direction: column;
+  }
+
+  .order-action-button {
+    width: 100%;
+  }
+}
+

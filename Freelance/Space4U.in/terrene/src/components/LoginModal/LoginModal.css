@@ -1,0 +1,275 @@
+.login-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1.5rem;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+.login-modal-overlay > * {
+  touch-action: auto;
+}
+
+.login-modal-content {
+  position: relative;
+  background: rgba(20, 19, 19, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.6rem;
+  padding: 2.5rem;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.login-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.login-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.login-modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  transition: background-color 0.25s ease;
+}
+
+.login-modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.login-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  color: var(--base-200);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  z-index: 1;
+}
+
+.login-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--base-100);
+  transform: rotate(90deg);
+}
+
+.login-modal-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-modal-header h2 {
+  font-size: 2rem;
+  letter-spacing: -0.05rem;
+  color: var(--base-100);
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.login-modal-header p {
+  color: var(--base-200);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.login-modal-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: rgba(242, 237, 230, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+.login-modal-perk {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--base-200);
+  font-size: 0.95rem;
+}
+
+.login-modal-perk .perk-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.login-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.login-modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--base-200);
+  font-size: 0.95rem;
+}
+
+.login-modal-form input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  color: var(--base-100);
+  transition: border-color 0.25s ease, background 0.25s ease;
+  font-family: inherit;
+}
+
+.login-modal-form input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.login-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.login-modal-btn {
+  border: none;
+  border-radius: 1rem;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-modal-btn.primary {
+  background: rgba(242, 237, 230, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--base-100);
+}
+
+.login-modal-btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(242, 237, 230, 0.18);
+}
+
+.login-modal-btn.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--base-200);
+}
+
+.login-modal-btn.secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.login-modal-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.login-modal-status {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+.login-modal-status.is-error {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #ff5252;
+}
+
+.login-modal-status.is-success {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #4caf50;
+}
+
+.login-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--base-200);
+}
+
+.login-modal-link {
+  background: none;
+  border: none;
+  color: var(--base-100);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.25s ease;
+}
+
+.login-modal-link:hover {
+  color: var(--base-050);
+}
+
+@media (max-width: 640px) {
+  .login-modal-content {
+    padding: 1.75rem 1.5rem;
+    max-height: 95vh;
+  }
+
+  .login-modal-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .login-modal-perks {
+    padding: 1rem;
+    gap: 0.6rem;
+  }
+
+  .login-modal-perk {
+    font-size: 0.875rem;
+  }
+}
+

@@ -1,0 +1,121 @@
+.studio-hero {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  color: var(--base-100);
+  padding-top: 35svh;
+  padding-bottom: 10svh;
+}
+
+.studio-hero .container {
+  display: flex;
+  gap: 2rem;
+}
+
+.studio-hero .studio-hero-col:nth-child(1) {
+  flex: 2;
+  color: var(--base-400);
+}
+
+.studio-hero .studio-hero-col:nth-child(1) p {
+  width: 50%;
+}
+
+.studio-hero .studio-hero-col:nth-child(2) {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.studio-hero .studio-hero-hero-img {
+  border-radius: 1rem;
+  width: 75%;
+  opacity: 0.65;
+  overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+  .studio-hero .container {
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .studio-hero .studio-hero-hero-img {
+    width: 100%;
+  }
+}
+
+.more-facts {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  color: var(--base-100);
+  padding: 2rem 0;
+}
+
+.more-facts .container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+}
+
+.more-facts .container p {
+  color: var(--base-300);
+}
+
+.more-facts .more-facts-items {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  background-color: var(--base-450);
+  padding: 8rem 4rem;
+  border-radius: 1rem;
+}
+
+.more-facts .fact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.more-facts .fact h2 {
+  display: flex;
+  justify-content: center;
+}
+
+.more-facts .fact p {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .studio-hero .studio-hero-col:nth-child(1) p {
+    width: 85%;
+  }
+  .more-facts .more-facts-items {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .more-facts .fact {
+    gap: 1.5rem;
+  }
+
+  .more-facts .fact h2 {
+    font-size: 4rem;
+  }
+}
+
+.how-we-work-container {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  min-height: 100svh;
+  background-color: var(--base-500);
+}

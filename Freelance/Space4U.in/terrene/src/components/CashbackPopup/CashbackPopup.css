@@ -1,0 +1,162 @@
+.cashback-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.cashback-popup-overlay.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cashback-popup {
+  position: relative;
+  background: rgba(20, 19, 19, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.6rem;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  color: var(--base-100);
+}
+
+.cashback-popup-overlay.is-visible .cashback-popup {
+  transform: scale(1) translateY(0);
+}
+
+.cashback-popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  color: var(--base-200);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.cashback-popup-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--base-100);
+  transform: rotate(90deg);
+}
+
+.cashback-popup-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  color: #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(76, 175, 80, 0.15);
+  border-radius: 50%;
+  border: 2px solid rgba(76, 175, 80, 0.3);
+}
+
+.cashback-popup h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  color: var(--base-100);
+  font-weight: 700;
+}
+
+.cashback-popup-amount {
+  margin: 0.5rem 0 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4caf50;
+  text-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.cashback-popup-message {
+  margin: 1rem 0 2rem;
+  color: var(--base-200);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.cashback-popup-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cashback-popup-button {
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  font-family: inherit;
+}
+
+.cashback-popup-button.primary {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.4);
+  color: #4caf50;
+}
+
+.cashback-popup-button.primary:hover {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: rgba(76, 175, 80, 0.6);
+  transform: translateY(-2px);
+}
+
+.cashback-popup-button.secondary {
+  background: rgba(242, 237, 230, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--base-200);
+}
+
+.cashback-popup-button.secondary:hover {
+  background: rgba(242, 237, 230, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--base-100);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .cashback-popup {
+    padding: 2rem 1.5rem;
+  }
+
+  .cashback-popup-amount {
+    font-size: 2rem;
+  }
+
+  .cashback-popup-actions {
+    flex-direction: column;
+  }
+
+  .cashback-popup-button {
+    width: 100%;
+  }
+}
+

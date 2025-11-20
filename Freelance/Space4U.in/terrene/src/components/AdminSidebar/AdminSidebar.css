@@ -1,0 +1,196 @@
+.admin-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 60px;
+  background: rgba(20, 19, 19, 0.75); /* More transparent for backdrop blur effect */
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 1001; /* Higher than main content header */
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex; /* Use flexbox to manage child height */
+  flex-direction: column;
+  backdrop-filter: blur(20px); /* Enhanced blur */
+  -webkit-backdrop-filter: blur(20px);
+  margin: 0;
+  padding: 0;
+}
+
+/* REMOVED: Don't shift main content when sidebar expands - let it overlay */
+/* body.admin-sidebar-hovered .admin-main-content {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+} */
+
+.admin-sidebar:hover {
+  width: 180px; /* Sidebar expands but content doesn't shift - overlays instead */
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+  /* Sidebar overlays the content area - no gap, no pushing */
+}
+
+.admin-sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* This makes the content scrollable */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  touch-action: pan-y;
+  /* Prevent scroll propagation to parent */
+  isolation: isolate;
+  /* Ensure scrollbar is always visible when content overflows */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+.admin-sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidebar-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.admin-sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.admin-sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: 80px; /* Extended height to show text properly */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-sidebar-header h2 {
+  font-size: 1.5rem;
+  color: var(--base-100);
+  margin: 0;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.admin-sidebar:hover .admin-sidebar-header h2 {
+  opacity: 1;
+}
+
+.admin-sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.admin-sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--base-200);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  gap: 1rem;
+}
+
+.admin-sidebar-item:hover {
+  background: rgba(242, 237, 230, 0.1);
+  color: var(--base-100);
+}
+
+.admin-sidebar-item.active {
+  background: rgba(242, 237, 230, 0.15);
+  color: var(--base-100);
+  border-left: 3px solid rgba(242, 237, 230, 0.6);
+}
+
+.admin-sidebar-subitem {
+  padding-left: 2.5rem;
+  font-size: 0.9rem;
+}
+
+.admin-sidebar-icon {
+  font-size: 1.25rem;
+  min-width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.admin-sidebar-text {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  flex: 1;
+}
+
+.admin-sidebar:hover .admin-sidebar-text {
+  opacity: 1;
+}
+
+.admin-sidebar-category {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-sidebar-category-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--base-200);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  gap: 1rem;
+  position: relative;
+}
+
+.admin-sidebar-category-header:hover {
+  background: rgba(242, 237, 230, 0.1);
+  color: var(--base-100);
+}
+
+.admin-sidebar-arrow {
+  margin-left: auto;
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+  opacity: 0;
+}
+
+.admin-sidebar:hover .admin-sidebar-arrow {
+  opacity: 1;
+}
+
+.admin-sidebar-arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.admin-sidebar-category-items {
+  background: rgba(0, 0, 0, 0.2);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.admin-sidebar-category-items.expanded {
+  /* Expand fully and let the outer sidebar content scroll */
+  max-height: 9999px;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 0;
+  }
+
+  .admin-sidebar:hover {
+    width: 280px;
+  }
+}
+

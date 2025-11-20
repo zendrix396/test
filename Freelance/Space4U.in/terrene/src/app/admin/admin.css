@@ -1,0 +1,186 @@
+/* FIX: REMOVED these rules. They were causing the main scroll issue. */
+/* The page containers now handle their own overflow management. */
+
+.admin-login-page {
+  min-height: 100vh;
+  background-color: var(--base-500);
+  background-image: url('/home/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--base-050);
+}
+
+.admin-login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(20, 19, 19, 0.85);
+  z-index: 0;
+}
+
+.admin-login-wrapper {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+  padding: 3rem 2rem 4rem;
+  width: 85%;
+  margin: 0 auto;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+}
+
+.admin-login-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.admin-login-panel h1 {
+  font-size: clamp(2.5rem, 4.2vw, 3.75rem);
+  letter-spacing: -0.15rem;
+  color: var(--base-100);
+  line-height: 1.1;
+}
+
+.admin-login-panel p.lead {
+  color: var(--base-200);
+  font-size: 1rem;
+  max-width: 32rem;
+  line-height: 1.5;
+}
+
+.admin-login-card {
+  align-self: center;
+  background: rgba(242, 237, 230, 0.08);
+  border-radius: 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  padding: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-login-card header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-login-card header h2 {
+  font-size: 2.25rem;
+  letter-spacing: -0.08rem;
+  color: var(--base-100);
+}
+
+.admin-login-card header p {
+  color: var(--base-250);
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--base-200);
+}
+
+.admin-login-form input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.9rem;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  color: var(--base-050);
+  transition: border-color 0.25s ease, background 0.25s ease;
+  font-family: inherit;
+}
+
+.admin-login-form input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-login-form .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.admin-login-form button {
+  border: none;
+  border-radius: 1rem;
+  padding: 0.95rem 1.2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  font-family: inherit;
+}
+
+.admin-login-form button.primary {
+  background: rgba(242, 237, 230, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--base-100);
+}
+
+.admin-login-form button.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.admin-login-form button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-login-form .status-text {
+  font-size: 0.95rem;
+  color: var(--base-200);
+}
+
+.admin-login-form .status-text.is-error {
+  color: rgba(242, 84, 91, 0.9);
+}
+
+.admin-login-form .status-text.is-success {
+  color: rgba(122, 231, 128, 0.9);
+}
+
+@media (max-width: 1024px) {
+  .admin-login-wrapper {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 3rem 1.5rem 5rem;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-login-wrapper {
+    padding: 2.5rem 1rem 4rem;
+    min-height: auto;
+  }
+
+  .admin-login-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
