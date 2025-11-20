@@ -1,0 +1,10 @@
+Hi {{ username }},
+
+Congratulations! You've reached the {{ new_tier }} tier!
+
+You now have {{ loyalty_points }} loyalty points.
+
+Keep shopping to unlock even more rewards!
+
+The Space4U Team
+

@@ -1,0 +1,26 @@
+[project]
+name = "space4u-backend"
+version = "0.1.0"
+description = "backend of space4u"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.7",
+    "django-taggit>=6.1.0",
+    "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "lxml>=6.0.2",
+    "pillow>=12.0.0",
+    "python-decouple>=3.8",
+    "qrcode[pil]>=8.2",
+    "requests>=2.32.5",
+    "django-allauth",
+    "dj-rest-auth[with_social]",
+    "razorpay>=2.0.0",
+    "beautifulsoup4>=4.14.2",
+    "jinja2>=3.1.6",
+    "reportlab>=4.4.4",
+    "drf-spectacular>=0.28.0",
+    "django-cors-headers>=4.9.0",
+    "geoip2>=5.1.0",
+]

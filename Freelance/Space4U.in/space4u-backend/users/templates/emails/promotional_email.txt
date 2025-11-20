@@ -1,0 +1,12 @@
+Hi {{ username }},
+
+{{ message }}
+
+{% if offer_code %}
+Use code: {{ offer_code }}
+{% endif %}
+
+Shop now!
+
+The Space4U Team
+

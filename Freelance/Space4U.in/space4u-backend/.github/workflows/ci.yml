@@ -1,0 +1,43 @@
+# .github/workflows/ci.yml
+name: Django CI
+
+# Trigger this workflow on pushes and pull requests to the develop branch
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.11"] # Specify your Python version
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    - name: Install project dependencies
+      run: |
+        # First, source the uv environment script
+        uv venv
+        source .venv/bin/activate
+        uv sync
+
+    - name: Run Django Tests
+      run: |
+        source .venv/bin/activate
+        # We need a dummy secret key for tests to run
+        export SECRET_KEY='dummy-secret-key-for-ci'
+        uv run manage.py test

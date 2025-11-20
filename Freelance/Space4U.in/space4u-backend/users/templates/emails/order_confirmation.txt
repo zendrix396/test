@@ -1,0 +1,42 @@
+Hi {{ username }},
+
+Thank you for your order! We're excited to prepare your items for you.
+
+Order Details:
+Order Number: #{{ order_number }}
+Order Date: {{ order_date|date:"F d, Y" }}
+Status: {{ order_status }}
+
+Items Ordered:
+{% for item in items %}
+- {{ item.product.name }}{% if item.variant.name %} ({{ item.variant.name }}){% endif %} - Quantity: {{ item.quantity }} - ₹{{ item.line_total }}
+{% endfor %}
+
+Order Summary:
+Subtotal: ₹{{ subtotal }}
+{% if discount_amount > 0 %}
+Discount: -₹{{ discount_amount }}
+{% endif %}
+{% if gift_wrap_amount > 0 %}
+Gift Wrap: ₹{{ gift_wrap_amount }}
+{% endif %}
+Total: ₹{{ total_cost }}
+
+Payment Method: {{ payment_method }}
+
+Shipping Address:
+{{ shipping_address.full_name }}
+{{ shipping_address.address_line1 }}
+{% if shipping_address.address_line2 %}{{ shipping_address.address_line2 }}{% endif %}
+{{ shipping_address.city }}, {{ shipping_address.state }} {{ shipping_address.postal_code }}
+{{ shipping_address.country }}
+Phone: {{ shipping_address.phone }}
+
+View your order: {{ order_url }}
+
+We'll send you another email once your order ships!
+
+Thank you for shopping with Space4U!
+
+The Space4U Team
+

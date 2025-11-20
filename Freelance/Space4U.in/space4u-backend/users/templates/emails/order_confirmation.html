@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Order Confirmed</title>
+    <style>
+        body{margin:0;padding:24px;background:#090a0f url('https://space4u.in/home/hero.jpg') center/cover no-repeat;background-blend-mode:overlay;background-color:rgba(9,10,15,.85);color:#eae7df;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        .container{max-width:900px;margin:0 auto;background:#111318;border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.5)}
+        .header{padding:48px 40px 36px;text-align:center;background:radial-gradient(1200px 300px at 50% -50%,rgba(255,200,80,.15),rgba(255,200,80,0) 60%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border-bottom:1px solid rgba(255,255,255,.12)}
+        .logo{font-size:40px;margin-bottom:12px}
+        h1{margin:0;font-size:34px;line-height:1.2;color:#fff;letter-spacing:.3px}
+        .content{padding:40px;font-size:17px;line-height:1.8;color:#d7d3cb}
+        .content p{margin:0 0 28px}
+        .content strong{color:#fff;font-weight:600}
+        .section{background:#0f1218;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px 22px;margin:28px 0}
+        .row{margin:0 0 16px}
+        .items .item{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+        .items .item:last-child{border-bottom:none}
+        .summary .row{display:flex;justify-content:space-between}
+        .summary .total{border-top:2px solid #f9a826;margin-top:10px;padding-top:18px;font-weight:800;color:#fff}
+        .button{display:inline-block;padding:14px 28px;border-radius:12px;text-decoration:none;color:#171717;background:linear-gradient(135deg,#ffdfa0 0%,#f9a826 100%);font-weight:800;letter-spacing:.2px;box-shadow:0 10px 24px rgba(249,168,38,.35)}
+        .footer{padding:28px 40px 36px;text-align:center;font-size:12px;color:#8f8b84;border-top:1px solid rgba(255,255,255,.12);background:#0e1015}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎉</div>
+            <h1>Order Confirmed</h1>
+        </div>
+        <div class="content">
+            <p>Hi {{ username }},</p>
+            <p>Thank you for your order! We're already preparing your items. You'll get another email once your order ships.</p>
+
+            <div class="section">
+                <div class="row"><strong>Order Number:</strong> #{{ order_number }}</div>
+                <div class="row"><strong>Order Date:</strong> {{ order_date|date:"F d, Y" }}</div>
+                <div class="row"><strong>Status:</strong> {{ order_status }}</div>
+            </div>
+
+            <div class="section items">
+                <div class="row" style="margin-bottom:10px"><strong>Items Ordered</strong></div>
+                {% for item in items %}
+                <div class="item">
+                    <div>
+                        <strong>{{ item.product.name }}{% if item.variant.name %} ({{ item.variant.name }}){% endif %}</strong><br>
+                        <span style="color:#9da0a8">Qty: {{ item.quantity }} × ₹{{ item.unit_price }}</span>
+                    </div>
+                    <div><strong>₹{{ item.line_total }}</strong></div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section summary">
+                <div class="row"><span>Subtotal</span><span>₹{{ subtotal }}</span></div>
+                {% if discount_amount > 0 %}<div class="row"><span>Discount</span><span>-₹{{ discount_amount }}</span></div>{% endif %}
+                {% if gift_wrap_amount > 0 %}<div class="row"><span>Gift Wrap</span><span>₹{{ gift_wrap_amount }}</span></div>{% endif %}
+                <div class="row total"><span>Total</span><span>₹{{ total_cost }}</span></div>
+            </div>
+
+            <div class="section">
+                <div class="row"><strong>Payment Method:</strong> {{ payment_method }}</div>
+                <div class="row"><strong>Shipping Address:</strong><br>
+                    {{ shipping_address.full_name }}<br>
+                    {{ shipping_address.address_line1 }}{% if shipping_address.address_line2 %}, {{ shipping_address.address_line2 }}{% endif %}<br>
+                    {{ shipping_address.city }}, {{ shipping_address.state }} {{ shipping_address.postal_code }}
+                </div>
+            </div>
+
+            <a href="{{ order_url }}" class="button">View Your Order</a>
+
+            <p style="margin-top:32px">Thank you for shopping with Space4U!</p>
+            <p><strong>The Space4U Team</strong></p>
+        </div>
+        <div class="footer">© 2025 Space4U. All rights reserved.</div>
+    </div>
+</body>
+</html>

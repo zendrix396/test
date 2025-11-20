@@ -1,0 +1,10 @@
+Hi {{ username }},
+
+You have items waiting in your cart!
+
+It's been {{ days_abandoned }} day(s) since you added items to your cart. Don't miss out!
+
+Visit your cart to complete your purchase.
+
+The Space4U Team
+

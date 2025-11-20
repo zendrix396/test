@@ -1,0 +1,11 @@
+Hi {{ username }},
+
+Thank you for signing up for Space4U!
+
+Please verify your email address by clicking the link below:
+{{ verification_url }}
+
+If you didn't create an account, you can safely ignore this email.
+
+The Space4U Team
+

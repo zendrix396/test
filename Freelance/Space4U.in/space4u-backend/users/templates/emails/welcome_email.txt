@@ -1,0 +1,9 @@
+Hi {{ username }},
+
+Welcome to Space4U - Your Otaku Haven!
+
+We're thrilled to have you join our community of anime and manga enthusiasts. Get ready to explore a universe of exclusive merchandise, connect with fellow fans, and dive deeper into the worlds you love.
+
+Happy collecting!
+
+The Space4U Team

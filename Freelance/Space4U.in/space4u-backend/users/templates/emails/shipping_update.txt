@@ -1,0 +1,21 @@
+Hi {{ username }},
+
+{{ status_message }}
+
+Order Details:
+Order Number: #{{ order_number }}
+Status: {{ order_status_display }}
+
+{% if tracking_number %}
+Tracking Number: {{ tracking_number }}
+Courier: {{ courier_name }}
+{% endif %}
+
+Order Total: ₹{{ total_cost }}
+
+View your order: {{ order_url }}
+
+Thank you for shopping with Space4U!
+
+The Space4U Team
+

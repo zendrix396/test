@@ -1,0 +1,8 @@
+Hi {{ username }},
+
+Items in your wishlist are waiting for you!
+
+Don't miss out on your favorite items. Visit your wishlist to see what's available.
+
+The Space4U Team
+

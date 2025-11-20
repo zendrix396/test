@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Secrets
+.env
+*.env
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Staticfiles and Media
+/media/
+/staticfiles/
+
+# Database files
+*.sqlite3
+db.sqlite3
